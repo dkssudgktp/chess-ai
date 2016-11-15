@@ -7,9 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
-	
-	JPanel [][] squares; 
+
+	JPanel [][] squares;
 	public static void main(String[] args) {
+
+	}
+
+	public Board(){
 		
 	}
 	@Override
