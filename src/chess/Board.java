@@ -10,6 +10,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
@@ -17,7 +18,6 @@ public class Board extends JFrame implements MouseListener{
 	JPanel [][] squares;
 	public static void main(String[] args) {
 		Board test = new Board();
-        test.addPiece("king.bmp",0,0);
         test.setSize(300,300);
         test.setResizable(false);
         test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,8 +26,10 @@ public class Board extends JFrame implements MouseListener{
 	
 	public void addPiece(String piece_name,int i, int j)
     {
-        Icon piece_icon = new ImageIcon(getClass().getResource(piece_name));
-        squares[i][j].add((JComponent)piece_icon);
+		JLabel piece_icon = new JLabel();
+        piece_icon.setIcon(new ImageIcon(piece_name));
+        squares[i][j].add(piece_icon);
+        squares[i][j].repaint();
     }
 	
 	public Board(){
