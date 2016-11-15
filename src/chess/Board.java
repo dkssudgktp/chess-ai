@@ -6,30 +6,26 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
 
+	/**
+	 * 체크판의 기본적인 배경 및 말 그리는 곳
+	 */
+	private static final long serialVersionUID = 1L;
 	JPanel [][] squares;
-	public static void main(String[] args) {
-		Board test = new Board();
-        test.setSize(300,300);
-        test.setResizable(false);
-        test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        test.setVisible(true);
-	}
 	
-	public void addPiece(String piece_name,int i, int j)
-    {
-		JLabel piece_icon = new JLabel();
-        piece_icon.setIcon(new ImageIcon(piece_name));
-        squares[i][j].add(piece_icon);
-        squares[i][j].repaint();
+	public void addPiece(Piece p,int i, int j){
+        squares[i][j].add(p);
+        paintAll(getGraphics());
+    }
+	
+	public void removePiece(int x, int y){
+        squares[x][y].remove(0);
+        paintAll(getGraphics());
     }
 	
 	public Board(){
@@ -47,9 +43,17 @@ public class Board extends JFrame implements MouseListener{
 				c.add(squares[i][j]);
 			}
 		}
+		
+		ImageIcon img = new ImageIcon("img/icon.png");
+		this.setIconImage(img.getImage());
+		this.setSize(500,500);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		System.out.println(e.getSource());
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
