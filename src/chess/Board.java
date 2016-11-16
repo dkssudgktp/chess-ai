@@ -30,15 +30,15 @@ public class Board extends JFrame implements MouseListener{
 	
 	public Board(){
 		Container c = getContentPane();
-		c.setLayout(new GridLayout(8, 8, 1, 1));
+		c.setLayout(new GridLayout(8, 8));
 		squares = new JPanel[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				squares[i][j] = new JPanel();
 				if ((i+j)%2 == 0) 
-					squares[i][j].setBackground(Color.WHITE);
+					squares[i][j].setBackground(Color.decode("#FFC489"));
 				else 
-					squares[i][j].setBackground(Color.BLACK);
+					squares[i][j].setBackground(Color.decode("#C77931"));
 				squares[i][j].addMouseListener(this);
 				c.add(squares[i][j]);
 			}
@@ -46,7 +46,8 @@ public class Board extends JFrame implements MouseListener{
 		
 		ImageIcon img = new ImageIcon("img/icon.png");
 		this.setIconImage(img.getImage());
-		this.setSize(500,500);
+		this.setSize(700,700);
+		this.setTitle("beat me if you can");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
