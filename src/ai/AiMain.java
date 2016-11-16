@@ -1,5 +1,5 @@
 package ai;
 
-public class ai_main() {
+public class AiMain {
   
 }
