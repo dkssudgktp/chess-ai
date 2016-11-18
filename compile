@@ -1,1 +1,1 @@
-javac -d bin -sourcepath src src/chess/Piece.java
+javac -d bin -sourcepath src src/chess/Chessmain.java

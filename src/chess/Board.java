@@ -13,7 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
-
+	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
+	static boolean BWchose;//누구의 차레인지 Ture:화이트, false:블랙
+	static int chosenx, choseny;
 	/**
 	 * 체크판의 기본적인 배경 및 말 그리는 곳
 	 */
@@ -56,21 +58,26 @@ public class Board extends JFrame implements MouseListener{
         this.setVisible(true);
 	}
 
-	private void pickup(int x, int y) {
-		squares[x][y].setBorder(BorderFactory.createLineBorder(Color.red,4));
+	private void pickup(Object e) {
+		JPanel j = (JPanel)e;
+		if (j.getBorder() != null && chosen == true) {
+			j.setBorder(null);
+			chosen = false;
+		}
+		else if(j.getBorder() == null && chosen == false) {
+			StringTokenizer position = new StringTokenizer(j.getName(), ".");
+
+			chosenx = Integer.parseInt(position.nextToken());
+			choseny = Integer.parseInt(position.nextToken());
+
+			squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
+			chosen = true;
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		JPanel j = (JPanel)e.getSource();
-		StringTokenizer position = new StringTokenizer(j.getName(), ".");
-
-		if (j.getBorder() != null) {
-			j.setBorder(null);
-		}
-		else {
-			pickup(Integer.parseInt(position.nextToken()), Integer.parseInt(position.nextToken()));
-		}
+		pickup(e.getSource());
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
