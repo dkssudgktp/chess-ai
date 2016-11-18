@@ -37,18 +37,11 @@ public class Board extends JFrame implements MouseListener{
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				squares[i][j] = new JPanel();
-<<<<<<< HEAD
-				if ((i+j)%2 == 0)
-					squares[i][j].setBackground(Color.WHITE);
-				else
-					squares[i][j].setBackground(Color.BLACK);
-=======
 				squares[i][j].setName(String.valueOf(i)+'.'+String.valueOf(j));
 				if ((i+j)%2 == 0)
 					squares[i][j].setBackground(Color.decode("#FFC489"));
 				else
 					squares[i][j].setBackground(Color.decode("#C77931"));
->>>>>>> a4cf965e50cd561186287afcea4fd9b17cdb9061
 				squares[i][j].addMouseListener(this);
 				c.add(squares[i][j]);
 			}
@@ -62,16 +55,16 @@ public class Board extends JFrame implements MouseListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 	}
-	
+
 	private void pickup(int x, int y) {
 		squares[x][y].setBorder(BorderFactory.createLineBorder(Color.red,4));
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		JPanel j = (JPanel)e.getSource();
 		StringTokenizer position = new StringTokenizer(j.getName(), ".");
-		
+
 		if (j.getBorder() != null) {
 			j.setBorder(null);
 		}
