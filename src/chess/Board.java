@@ -60,23 +60,24 @@ public class Board extends JFrame implements MouseListener{
 	
 	private void pickup(Object e) {
 		JPanel j = (JPanel)e;
+		
+		StringTokenizer position = new StringTokenizer(j.getName(), ".");
+		
+		chosenx = Integer.parseInt(position.nextToken());
+		choseny = Integer.parseInt(position.nextToken());
+		
+		
 		if (j.getBorder() != null && chosen == true) {
 			j.setBorder(null);
 			chosen = false;
 		}
-		else if(j.getBorder() == null && chosen == false) {
-			StringTokenizer position = new StringTokenizer(j.getName(), ".");
-			
-			chosenx = Integer.parseInt(position.nextToken());
-			choseny = Integer.parseInt(position.nextToken());
-			
+		else if(j.getBorder() == null && chosen == false && Game.isSet(chosenx, choseny)) {
 			squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 			chosen = true;
 		}
 		
 		
 	}
-	
 	
 	
 	@Override

@@ -2,38 +2,6 @@ package chess;
 
 public class Chessmain {
 	public static void main(String[] args) {
-		Board t = new Board();
-		t.addPiece(new Piece("img/Black_Rook.png"), 0, 0);
-		t.addPiece(new Piece("img/Black_Knight.png"), 0, 1);
-		t.addPiece(new Piece("img/Black_Bishop.png"), 0, 2);
-		t.addPiece(new Piece("img/Black_Queen.png"), 0, 3);
-		t.addPiece(new Piece("img/Black_King.png"), 0, 4);
-		t.addPiece(new Piece("img/Black_Bishop.png"), 0, 5);
-		t.addPiece(new Piece("img/Black_Knight.png"), 0, 6);
-		t.addPiece(new Piece("img/Black_Rook.png"), 0, 7);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 0);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 1);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 2);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 3);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 4);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 5);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 6);
-		t.addPiece(new Piece("img/Black_Pawn.png"), 1, 7);
-		t.addPiece(new Piece("img/White_Rook.png"), 7, 0);
-		t.addPiece(new Piece("img/White_Knight.png"), 7, 1);
-		t.addPiece(new Piece("img/White_Bishop.png"), 7, 2);
-		t.addPiece(new Piece("img/White_Queen.png"), 7, 3);
-		t.addPiece(new Piece("img/White_King.png"), 7, 4);
-		t.addPiece(new Piece("img/White_Bishop.png"), 7, 5);
-		t.addPiece(new Piece("img/White_Knight.png"), 7, 6);
-		t.addPiece(new Piece("img/White_Rook.png"), 7, 7);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 0);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 1);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 2);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 3);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 4);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 5);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 6);
-		t.addPiece(new Piece("img/White_Pawn.png"), 6, 7);
+		new Game();
 	}
 }
