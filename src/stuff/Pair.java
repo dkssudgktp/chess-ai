@@ -54,17 +54,14 @@ public class Pair {
     this(name, flag, dx, dy);
   }
 
-  public byte[][] movable(byte x, byte y) {
+  public byte[][] movable() {
     List<byte> resx = new ArrayList<byte>();
     List<byte> resy = new ArrayList<byte>();
 
     if (flag & 1) {
-      byte tmpx = -1;
-      byte tmpy = -1;
-
       for (int i = 0; i < dlen; ++i) {
-        tmpx = dx[i] + x;
-        tmpy = dx[i] + y;
+        byte tmpx = dx[i] + Board.chosenx;
+        byte tmpy = dy[i] + Board.choseny;
 
         while (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
           resx.add(tmpx);
@@ -77,8 +74,8 @@ public class Pair {
     }
     else {
       for (int i = 0; i < dlen; ++i) {
-        byte tmpx = dx[i] + x;
-        byte tmpy = dy[i] + y;
+        byte tmpx = dx[i] + Board.chosenx;
+        byte tmpy = dy[i] + Board.choseny;
 
         if (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
           resx.add(tmpx);

@@ -6,6 +6,6 @@ public class Rook extends Pair {
     byte[] dx = byte[] { 1, -1, 0,  0 };
     byte[] dy = byte[] { 0,  0, 1, -1 };
 
-    super("Rook", dx, dy);
+    super("Rook",flag, dx, dy);
   }
 }
