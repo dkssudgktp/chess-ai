@@ -66,7 +66,7 @@ public class Pair {
         tmpx = dx[i] + x;
         tmpy = dx[i] + y;
 
-        while (!Game.isSet(tmpx, tmpy)) {
+        while (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
           resx.add(tmpx);
           resy.add(tmpy);
 
@@ -80,7 +80,7 @@ public class Pair {
         byte tmpx = dx[i] + x;
         byte tmpy = dy[i] + y;
 
-        if (!Game.isSet(tmpx, tmpy)) {
+        if (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
           resx.add(tmpx);
           resy.add(tmpy);
         }
@@ -92,9 +92,5 @@ public class Pair {
 
     byte[][] result = new byte[][] { bResX, bResY };
     return result;
-  }
-
-  public byte[][] attackable(int x, int y) {
-    
   }
 }

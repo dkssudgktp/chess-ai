@@ -34,4 +34,12 @@ public class Game {
 		}
 	}
 
+	public static boolean isEnemy(int i, int j) {
+		if (table[i][j].startsWith("White")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

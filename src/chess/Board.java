@@ -83,22 +83,6 @@ public class Board extends JFrame implements MouseListener{
 
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
-
-			System.out.println(chosenx);
-			System.out.println(gox);
-
-			Movement m = new Movement();
-
-			if (m.piecemove()) {
-				System.out.println("asd");
-				System.out.println(squares[gox][goy].getName());
-				squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
-				//squares[chosenx][choseny].remove(0);
-				paintAll(getGraphics());
-
-				squares[chosenx][choseny].setBorder(null);
-				chosen = false;
-			}
 		}
 	}
 
