@@ -13,8 +13,9 @@ public class Pair {
   private String name;
 
   private byte flag;
-  // bit 0 = move unlimits
-  // bit 1 = use attack position
+  // bit 0 = move unlimits (1)
+  // bit 1 = use attack position (1 << 1)
+  // bit 2 = isFirst (if used) (1 << 2)
 
   private byte dlen;
   private byte[] dx;
@@ -23,6 +24,8 @@ public class Pair {
   private byte adlen;
   private byte[] adx;
   private byte[] ady;
+
+  private byte[] tmp;
 
   public Pair() {
     name = "";
@@ -54,7 +57,16 @@ public class Pair {
     this(name, flag, dx, dy);
   }
 
+<<<<<<< HEAD
   public byte[][] movable() {
+=======
+  public Pair(String name, byte flag, byte[] dx, byte[] dy, byte[] adx, byte[] ady, byte[] tmp) {
+    this.tmp = tmp;
+    this(name, flag, dx, dy, adx, ady);
+  }
+
+  public byte[][] movable(byte x, byte y) {
+>>>>>>> e0004df83791a0f6c74d3a1cc1608aec0ab1494c
     List<byte> resx = new ArrayList<byte>();
     List<byte> resy = new ArrayList<byte>();
 
@@ -81,6 +93,16 @@ public class Pair {
           resx.add(tmpx);
           resy.add(tmpy);
         }
+      }
+    }
+
+    if (flag & (1 << 2)) {
+      byte tmpx = tmp[0] + x;
+      byte tmpy = tmp[1] + y;
+
+      if (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
+        resx.add(tmpx);
+        resx.add(tmpy);
       }
     }
 
