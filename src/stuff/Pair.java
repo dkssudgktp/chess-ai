@@ -7,18 +7,33 @@ public class Pair {
 
   private String name;
 
-  // movement[0] : cnt
-  // movement[1] : dx , [2] : dy
-  // movement[3] : attack dx, [4] : attack dy
-  private byte[] movement;
+  private byte flag;
+  // bit 0 = move unlimits
+  // bit 1 = use attack position
+
+  private byte[] dx;
+  private byte[] dy;
+
+  private byte[] adx;
+  private byte[] ady;
 
   public Pair() {
     name = "";
+    flag = NULL;
     movement = NULL;
   }
 
-  public Pair(String name, byte[] movement) {
+  public Pair(String name, byte flag, byte[] dx, byte[] dy) {
     this.name = name;
-    this.movement = movement;
+    this.flag = flag;
+    this.dx = dx;
+    this.dy = dy;
+  }
+
+  public Pair(String name, byte flag, byte[] dx, byte[] dy, byte[] adx, byte[] ady) {
+    this.adx = adx;
+    this.ady = ady;
+
+    this(name, flag, dx, dy);
   }
 }
