@@ -83,6 +83,7 @@ public class Board extends JFrame implements MouseListener{
 
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
+
 		}
 	}
 

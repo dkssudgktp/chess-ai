@@ -25,7 +25,7 @@ public class Game {
 		}
 	}
 
-	static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
+	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
 		if (table[i][j] != null) {
 			return true;
 		}
