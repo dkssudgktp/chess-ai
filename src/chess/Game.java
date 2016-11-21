@@ -1,8 +1,8 @@
 package chess;
 
 public class Game {
-	static String[][] table = new String[8][8];
-	String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
+	public static String[][] table = new String[8][8];
+	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
 
 	public Game() {
 		newGame();
@@ -16,7 +16,7 @@ public class Game {
 		}
 	}
 
-	void newGame() { // 체크판을 새로 초기화 하는 함수
+	private void newGame() { // 체크판을 새로 초기화 하는 함수
 		for (int i = 0; i < pieces.length; i++) {
 			table[0][i] = "Black_"+pieces[i];
 			table[7][i] = "White_"+pieces[i];

@@ -71,7 +71,6 @@ public class Board extends JFrame implements MouseListener{
 			chosenx = Integer.parseInt(position.nextToken());
 			choseny = Integer.parseInt(position.nextToken());
 
-<<<<<<< HEAD
 			System.out.println(1);
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
@@ -102,7 +101,7 @@ public class Board extends JFrame implements MouseListener{
 			}
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		pickup(e.getSource());
