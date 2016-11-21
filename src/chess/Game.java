@@ -3,8 +3,8 @@ package chess;
 public class Game {
 	static String[][] table = new String[8][8];
 	String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
-	
-	public Game() { 
+
+	public Game() {
 		newGame();
 		Board t = new Board();
 		for (int i = 0; i < 8; i++) {
@@ -16,7 +16,7 @@ public class Game {
 		}
 	}
 
-	void newGame() { // 체크판을 새로 초기화 하는 함수 
+	void newGame() { // 체크판을 새로 초기화 하는 함수
 		for (int i = 0; i < pieces.length; i++) {
 			table[0][i] = "Black_"+pieces[i];
 			table[7][i] = "White_"+pieces[i];
@@ -24,8 +24,8 @@ public class Game {
 			table[6][i] = "White_Pawn";
 		}
 	}
-	
-	static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수 
+
+	static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
 		if (table[i][j] != null) {
 			return true;
 		}
@@ -33,5 +33,5 @@ public class Game {
 			return false;
 		}
 	}
-	
+
 }

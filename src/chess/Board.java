@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
-	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨 
-	static boolean BWchose;//누구의 차레인지 Ture:화이트, false:블랙  
+	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
+	static boolean BWchose;//누구의 차레인지 Ture:화이트, false:블랙
 	static int chosenx, choseny, gox, goy;
 	/**
 	 * 체크판의 기본적인 배경 및 말 그리는 곳
@@ -57,52 +57,50 @@ public class Board extends JFrame implements MouseListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 	}
-	
+
 	private void pickup(Object e) {
 		JPanel j = (JPanel)e;
-		
+
 		if (j.getBorder() != null && chosen == true) {
 			j.setBorder(null);
 			chosen = false;
 		}
 		else if(j.getBorder() == null && chosen == false) {
 			StringTokenizer position = new StringTokenizer(j.getName(), ".");
-			
+
 			chosenx = Integer.parseInt(position.nextToken());
 			choseny = Integer.parseInt(position.nextToken());
+
 			System.out.println(1);
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
 			}
-			
+
 		}
 		else if(j.getBorder() == null && chosen == true){
 			StringTokenizer position = new StringTokenizer(j.getName(), ".");
-			
+
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
-			
+
 			System.out.println(chosenx);
 			System.out.println(gox);
-			
+
 			Movement m = new Movement();
-			
+
 			if (m.piecemove()) {
 				System.out.println("asd");
 				System.out.println(squares[gox][goy].getName());
 				squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
 				//squares[chosenx][choseny].remove(0);
 				paintAll(getGraphics());
-				
+
 				squares[chosenx][choseny].setBorder(null);
 				chosen = false;
 			}
 		}
-		
-		
 	}
-	
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
