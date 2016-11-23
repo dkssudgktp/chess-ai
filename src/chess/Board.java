@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class Board extends JFrame implements MouseListener{
 	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
 	static boolean BWchose;//누구의 차레인지 Ture:화이트, false:블랙
-	static int chosenx, choseny, gox, goy;
+	public static int chosenx, choseny, gox, goy;
 	/**
 	 * 체크판의 기본적인 배경 및 말 그리는 곳
 	 */
@@ -71,10 +71,10 @@ public class Board extends JFrame implements MouseListener{
 			chosenx = Integer.parseInt(position.nextToken());
 			choseny = Integer.parseInt(position.nextToken());
 
-			System.out.println(1);
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
+				Game.stuffCheck();
 			}
 
 		}
@@ -83,6 +83,8 @@ public class Board extends JFrame implements MouseListener{
 
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
+			
+			Game.stuffCheck();
 
 		}
 	}

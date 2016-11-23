@@ -1,6 +1,5 @@
 package ai;
 import chess.Game;
-import chess.Pair;
 
 public class AiMain {
   /*

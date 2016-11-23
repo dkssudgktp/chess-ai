@@ -1,11 +1,11 @@
 package stuff;
 
 public class Rook extends Pair {
-  public Rook() {
-    byte flag = 1;
-    byte[] dx = byte[] { 1, -1, 0,  0 };
-    byte[] dy = byte[] { 0,  0, 1, -1 };
+  private static byte flag = 1;
+  private static byte[] dy = new byte[] { 1, -1, 0,  0 };
+  private static byte[] dx = new byte[] { 0,  0, 1, -1 };
 
+  public Rook() {
     super("Rook",flag, dx, dy);
   }
 }
