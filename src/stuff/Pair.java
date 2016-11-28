@@ -68,17 +68,29 @@ public class Pair {
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
-    	System.out.println(Board.chosenx);
-    	System.out.println(Board.choseny);
-    	byte tmpy = (byte) (dy[i] + Board.choseny);
-        byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
-        while (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
-          System.out.println("1처리");
-          System.out.println(dx[i]*-1 + Board.chosenx);
-          System.out.println(dy[i] + Board.choseny);
-          System.out.println(Game.isSet(tmpx, tmpy));
-          resx.add(tmpx);
-          resy.add(tmpy);
+      byte tmpy = (byte) (dy[i] + Board.choseny);
+      byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
+      while (true) {//에러의 주요원인 다시 터짐
+    	  if (Game.isValueable(tmpx, tmpy)) {
+	        if (Game.isSet(tmpx, tmpy) == false) {
+	          resx.add(tmpx);
+	          resy.add(tmpy);
+	        }
+          else if (Game.isSet(tmpx, tmpy)) {
+	          if (!Game.isEnemy(tmpx, tmpy)) {
+	            resx.add(tmpx);
+	            resy.add(tmpy);
+	            System.out.println(tmpx);
+		          System.out.println(tmpy);
+	            break;
+	           }
+	          else{
+	             break;
+	          }
+	         }
+			  }else {
+				      break;
+			  }
 
           tmpx += dx[i]*-1;
           tmpy += dy[i];
@@ -87,11 +99,16 @@ public class Pair {
     }
     else {
       for (int i = 0; i < dlen; ++i) {
-        byte tmpy = (byte) (dy[i] + Board.choseny);
-        byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
-        if (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
-          resx.add(tmpx);
-          resy.add(tmpy);
+    		byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
+            byte tmpy = (byte) (dy[i] + Board.choseny);
+        if (Game.isValueable(tmpx, tmpy)) {
+        	if (!Game.isSet(tmpx, tmpy)) {
+  	          resx.add(tmpx);
+  	          resy.add(tmpy);
+  	        }else if (Game.isSet(tmpx, tmpy) && !Game.isEnemy(tmpx, tmpy)) {
+  	        	resx.add(tmpx);
+    	        resy.add(tmpy);
+			}
         }
       }
     }

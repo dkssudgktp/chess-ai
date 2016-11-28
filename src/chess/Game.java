@@ -2,6 +2,7 @@ package chess;
 
 import stuff.Bishop;
 import stuff.King;
+import stuff.Knight;
 import stuff.Pair;
 import stuff.Pawn;
 import stuff.Queen;
@@ -12,8 +13,8 @@ public class Game {
 
 	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
 	private static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
-	private static Pair[] stuffs = {new Pawn(), new Rook(), new King(), new Bishop(), new Queen(), new King()};
-	
+	private static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
+
 	public Game() {
 		newGame();
 		Board t = new Board();
@@ -39,21 +40,31 @@ public class Game {
 		for (int i = 0; i < stuffpiece.length; i++) {
 			if (table[Board.chosenx][Board.choseny].endsWith(stuffpiece[i])) {
 				Board.possible = stuffs[i].movable();
+				for (int j = 0; j < Board.possible[0].length; j++) {
+					System.out.println("-------------------");
+					System.out.println(Board.possible[0][j]);
+					System.out.println(Board.possible[1][j]);
+					System.out.println("-------------------");
+				}
 			}
 		}
 		return null;
 	}
-
-	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
+	
+	public static boolean isValueable(int i , int j){
 		if (i < 8 && i >= 0 && j < 8 && j >= 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
 			if (table[i][j] != null) {
 				return true;
 			}
 			else {
 				return false;
 			}
-		}
-		return false;
 	}
 
 	public static boolean isEnemy(int i, int j) {//true:white false:black

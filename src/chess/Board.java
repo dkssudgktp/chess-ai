@@ -69,7 +69,6 @@ public class Board extends JFrame implements MouseListener{
 			StringTokenizer position = new StringTokenizer(j.getName(), ".");
 			chosenx = Integer.parseInt(position.nextToken());
 			choseny = Integer.parseInt(position.nextToken());
-			System.out.println(Game.isSet(chosenx, choseny));
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
@@ -83,14 +82,16 @@ public class Board extends JFrame implements MouseListener{
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
 			
-			for (int i = 0; i < Board.possible.length; i++) {
+			for (int i = 0; i < Board.possible[0].length; i++) {
 				if (possible[0][i] == gox && possible[1][i] == goy) {
 					
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;
 					
 					squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
-					squares[chosenx][choseny] = null;
+					
+					Game.table[gox][goy] = Game.table[chosenx][choseny];
+					Game.table[chosenx][choseny] = null;
 					
 					paintAll(getGraphics());
 					break;
