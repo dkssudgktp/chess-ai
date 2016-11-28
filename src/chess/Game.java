@@ -12,7 +12,7 @@ public class Game {
 
 	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
 	private static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
-	private static Pair[] stuffs = {new Pawn(), new Rook(), new Bishop(), new Queen(), new King()};
+	private static Pair[] stuffs = {new Pawn(), new Rook(), new King(), new Bishop(), new Queen(), new King()};
 	
 	public Game() {
 		newGame();
@@ -38,26 +38,22 @@ public class Game {
 	public static Byte[][] stuffCheck(){// 체스가 갈수 있는 범위 체
 		for (int i = 0; i < stuffpiece.length; i++) {
 			if (table[Board.chosenx][Board.choseny].endsWith(stuffpiece[i])) {
-				Byte[][] possible = stuffs[i].movable();
-				for (int j = 0; j < possible.length; j++) {
-					for (int j2 = 0; j2 < 2; j2++) {
-						System.out.println(possible[j2][j]);
-						
-					}
-				}
-				System.out.println("___________________");
+				Board.possible = stuffs[i].movable();
 			}
 		}
 		return null;
 	}
 
 	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
-		if (table[i][j] != null) {
-			return true;
+		if (i < 8 && i >= 0 && j < 8 && j >= 0) {
+			if (table[i][j] != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	public static boolean isEnemy(int i, int j) {//true:white false:black
