@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
 	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
-	static boolean BWchose;//누구의 차레인지 Ture:화이트, false:블랙
+	public static boolean BWchose = true;//누구의 차레인지 Ture:화이트, false:블랙
 	static Byte[][] possible;
 	public static int chosenx, choseny, gox, goy;
 	/**
@@ -27,6 +28,8 @@ public class Board extends JFrame implements MouseListener{
         squares[i][j].add(p);
         paintAll(getGraphics());
     }
+	
+	
 
 	public void removePiece(int x, int y){
         squares[x][y].remove(0);
@@ -117,4 +120,5 @@ public class Board extends JFrame implements MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
+
 }

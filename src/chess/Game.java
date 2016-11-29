@@ -25,6 +25,7 @@ public class Game {
 				}
 			}
 		}
+
 	}
 
 	private void newGame() { // 체크판을 새로 초기화 하는 함수
@@ -41,10 +42,10 @@ public class Game {
 			if (table[Board.chosenx][Board.choseny].endsWith(stuffpiece[i])) {
 				Board.possible = stuffs[i].movable();
 				for (int j = 0; j < Board.possible[0].length; j++) {
-					System.out.println("-------------------");
+					System.out.println("---------------");
 					System.out.println(Board.possible[0][j]);
 					System.out.println(Board.possible[1][j]);
-					System.out.println("-------------------");
+					System.out.println("---------------");
 				}
 			}
 		}
@@ -68,11 +69,20 @@ public class Game {
 	}
 
 	public static boolean isEnemy(int i, int j) {//true:white false:black
-		if (isSet(i,j) && table[i][j].startsWith("White")) {
-			return true;
-		}
-		else {
-			return false;
+		if (Board.BWchose == true) {
+			if (isSet(i,j) && table[i][j].startsWith("Black")) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}else {
+			if (isSet(i,j) && table[i][j].startsWith("White")) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 }

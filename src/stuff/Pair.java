@@ -27,7 +27,8 @@ public class Pair {
   private byte[] ady;
 
   private byte[] tmp;
-
+  
+  private int reverse = 1;
   private Byte nULL;
   public Pair() {
 	  nULL = (Byte) null;
@@ -46,6 +47,12 @@ public class Pair {
     this.flag = flag;
     this.dx = dx;
     this.dy = dy;
+    
+    if (Board.BWchose == true) {
+		this.reverse = -1;
+	}else{
+		this.reverse = 1;
+	}
 
     this.dlen = (byte) dx.length;
   }
@@ -69,7 +76,7 @@ public class Pair {
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
       byte tmpy = (byte) (dy[i] + Board.choseny);
-      byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
+      byte tmpx = (byte) (dx[i]*reverse+ Board.chosenx);
       while (true) {//에러의 주요원인 다시 터짐
     	  if (Game.isValueable(tmpx, tmpy)) {
 	        if (Game.isSet(tmpx, tmpy) == false) {
@@ -77,7 +84,7 @@ public class Pair {
 	          resy.add(tmpy);
 	        }
           else if (Game.isSet(tmpx, tmpy)) {
-	          if (!Game.isEnemy(tmpx, tmpy)) {
+	          if (Game.isEnemy(tmpx, tmpy)) {
 	            resx.add(tmpx);
 	            resy.add(tmpy);
 	            System.out.println(tmpx);
@@ -97,15 +104,15 @@ public class Pair {
         }
       }
     }
-    else {
+    else{
       for (int i = 0; i < dlen; ++i) {
-    		byte tmpx = (byte) (dx[i]*-1 + Board.chosenx);
+    		byte tmpx = (byte) (dx[i]*reverse + Board.chosenx);
             byte tmpy = (byte) (dy[i] + Board.choseny);
         if (Game.isValueable(tmpx, tmpy)) {
         	if (!Game.isSet(tmpx, tmpy)) {
   	          resx.add(tmpx);
   	          resy.add(tmpy);
-  	        }else if (Game.isSet(tmpx, tmpy) && !Game.isEnemy(tmpx, tmpy)) {
+  	        }else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
   	        	resx.add(tmpx);
     	        resy.add(tmpy);
 			}
@@ -115,8 +122,8 @@ public class Pair {
 
     if ((flag & (1 << 2)) == 4) {
       byte tmpy = (byte) (tmp[0] + Board.choseny);
-      byte tmpx = (byte) (tmp[1]*-1 + Board.chosenx);
-      if (!Game.isSet(tmpx, tmpy) || Game.isEnemy(tmpx, tmpy)) {
+      byte tmpx = (byte) (tmp[1]*reverse + Board.chosenx);
+      if (!Game.isSet(tmpx, tmpy)) {
         resx.add(tmpx);
         resy.add(tmpy);
       }
