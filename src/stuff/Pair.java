@@ -48,12 +48,6 @@ public class Pair {
     this.dx = dx;
     this.dy = dy;
 
-    if (Board.BWchose == true) {
-		this.reverse = -1;
-	}else{
-		this.reverse = 1;
-	}
-
     this.dlen = (byte) dx.length;
   }
 
@@ -72,6 +66,12 @@ public class Pair {
   public Byte[][] movable() {
 	List<Byte> resx = new ArrayList<Byte>();
 	List<Byte> resy = new ArrayList<Byte>();
+
+  if (Board.BWchose == true) {
+  this.reverse = -1;
+}else{
+  this.reverse = 1;
+}
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
@@ -99,14 +99,14 @@ public class Pair {
 				      break;
 			  }
 
-          tmpx += dx[i]*-1;
+          tmpx += dx[i]*reverse;
           tmpy += dy[i];
         }
       }
     }
     else{
       for (int i = 0; i < dlen; ++i) {
-        if (Board.choseny == 6 || Board.choseny == 1) {
+
           byte tmpx = (byte) (dx[i]*reverse + Board.chosenx);
               byte tmpy = (byte) (dy[i] + Board.choseny);
           if (Game.isValueable(tmpx, tmpy)) {
@@ -116,19 +116,20 @@ public class Pair {
     	        }else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
     	        	resx.add(tmpx);
       	        resy.add(tmpy);
-  			}
           }
         }
       }
     }
 
     if ((flag & (1 << 2)) == 4) {
+      if (Board.chosenx == 6 || Board.chosenx == 1) {
       byte tmpy = (byte) (tmp[0] + Board.choseny);
       byte tmpx = (byte) (tmp[1]*reverse + Board.chosenx);
       if (!Game.isSet(tmpx, tmpy)) {
         resx.add(tmpx);
         resy.add(tmpy);
       }
+    }
     }
 
     Byte[] bResX = resx.toArray(new Byte[resx.size()]);

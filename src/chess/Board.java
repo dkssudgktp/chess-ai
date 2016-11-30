@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 public class Board extends JFrame implements MouseListener{
 	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
-	public static boolean BWchose = true;//누구의 차레인지 Ture:화이트, false:블랙
+	public static boolean BWchose = false;//누구의 차레인지 Ture:화이트, false:블랙
 	static Byte[][] possible;
 	public static int chosenx, choseny, gox, goy;
 	/**
@@ -28,8 +28,8 @@ public class Board extends JFrame implements MouseListener{
         squares[i][j].add(p);
         paintAll(getGraphics());
     }
-	
-	
+
+
 
 	public void removePiece(int x, int y){
         squares[x][y].remove(0);
@@ -84,18 +84,18 @@ public class Board extends JFrame implements MouseListener{
 
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
-			
+
 			for (int i = 0; i < Board.possible[0].length; i++) {
 				if (possible[0][i] == gox && possible[1][i] == goy) {
-					
+
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;
-					
+
 					squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
-					
+
 					Game.table[gox][goy] = Game.table[chosenx][choseny];
 					Game.table[chosenx][choseny] = null;
-					
+
 					paintAll(getGraphics());
 					break;
 				}
