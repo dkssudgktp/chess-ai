@@ -1,5 +1,7 @@
 package chess;
 
+import stuff.Pair;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Frame;
@@ -12,9 +14,11 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 
 public class Board extends JFrame implements MouseListener {
+	private boolean isGameEnd = false;
 	private boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
 	private int chosenx, choseny;
 	public static boolean isWhiteTurn = true;//누구의 차레인지 Ture:화이트, false:블랙
@@ -45,7 +49,7 @@ public class Board extends JFrame implements MouseListener {
 				squares[i][j] = new JPanel();
 				squares[i][j].setName(String.valueOf(i)+'.'+String.valueOf(j));
 
-				if ((i+j)%2 == 0){
+				if ((i + j) % 2 == 0){
 					squares[i][j].setBackground(Color.decode("#FFC489"));
 				}
 				else {
@@ -79,6 +83,11 @@ public class Board extends JFrame implements MouseListener {
 			choseny = Integer.parseInt(position.nextToken());
 
 			if (Game.isSet(chosenx, choseny)) {
+				if (Game.isEnemy(chosenx, choseny)) {
+					JOptionPane.showMessageDialog(this, "not your turn");
+					return;
+				}
+
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
 			}
@@ -97,6 +106,14 @@ public class Board extends JFrame implements MouseListener {
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;
 
+					if (Game.isEnemy(gox, goy)) {
+						squares[gox][goy].removeAll();
+
+						if (Game.table[gox][goy].endsWith("King")) {
+							isGameEnd = true;
+						}
+					}
+
 					squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
 
 					Game.table[gox][goy] = Game.table[chosenx][choseny];
@@ -105,6 +122,17 @@ public class Board extends JFrame implements MouseListener {
 					isWhiteTurn = !isWhiteTurn;
 
 					paintAll(getGraphics());
+
+					if (isGameEnd) {
+						String winner = "White";
+						if (isWhiteTurn) {
+							winner = "Black";
+						}
+
+						JOptionPane.showMessageDialog(this, winner + " win !!");
+						System.exit(0);
+					}
+
 					break;
 				}
 			}

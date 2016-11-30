@@ -27,7 +27,7 @@ public abstract class Pair {
   private byte[] tmp;
   private Byte nULL;
 
-  private static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
+  private static String[] stuffpiece = {"Pawn", "Rook", "Knight", "Bishop", "Queen", "King"};
 	private static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
 
 /////////////////////////////////////////////////
