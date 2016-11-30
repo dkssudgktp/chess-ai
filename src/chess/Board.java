@@ -25,31 +25,34 @@ public class Board extends JFrame implements MouseListener{
 	JPanel [][] squares;
 
 	public void addPiece(Piece p,int i, int j){
-        squares[i][j].add(p);
-        paintAll(getGraphics());
-    }
-	
-	
+    squares[i][j].add(p);
+    paintAll(getGraphics());
+  }
 
 	public void removePiece(int x, int y){
-        squares[x][y].remove(0);
-        paintAll(getGraphics());
-    }
+    squares[x][y].remove(0);
+    paintAll(getGraphics());
+  }
 
 	public Board(){
-		Container c = getContentPane();
-		c.setLayout(new GridLayout(8, 8));
+		Container pane = getContentPane();
+		pane.setLayout(new GridLayout(8, 8));
+
 		squares = new JPanel[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				squares[i][j] = new JPanel();
 				squares[i][j].setName(String.valueOf(i)+'.'+String.valueOf(j));
-				if ((i+j)%2 == 0)
+
+				if ((i+j)%2 == 0){
 					squares[i][j].setBackground(Color.decode("#FFC489"));
-				else
+				}
+				else {
 					squares[i][j].setBackground(Color.decode("#C77931"));
+				}
+
 				squares[i][j].addMouseListener(this);
-				c.add(squares[i][j]);
+				pane.add(squares[i][j]);
 			}
 		}
 
@@ -57,50 +60,51 @@ public class Board extends JFrame implements MouseListener{
 		this.setIconImage(img.getImage());
 		this.setSize(550,550);
 		this.setTitle("Chess");
-        this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+    this.setResizable(false);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setVisible(true);
 	}
 
-	private void pickup(Object e) {
-		JPanel j = (JPanel)e;
-		if (j.getBorder() != null && chosen == true) {
-			j.setBorder(null);
+	private void pickup(Object obj) {
+		JPanel panel = (JPanel)obj;
+		if (panel.getBorder() != null && chosen == true) {
+			panel.setBorder(null);
 			chosen = false;
 		}
-		else if(j.getBorder() == null && chosen == false) {
-			StringTokenizer position = new StringTokenizer(j.getName(), ".");
+		else if(panel.getBorder() == null && chosen == false) {
+			StringTokenizer position = new StringTokenizer(panel.getName(), ".");
+
 			chosenx = Integer.parseInt(position.nextToken());
 			choseny = Integer.parseInt(position.nextToken());
+
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
+
 				Game.stuffCheck();
 			}
-
 		}
-		else if(j.getBorder() == null && chosen == true){
-			StringTokenizer position = new StringTokenizer(j.getName(), ".");
+		else if(panel.getBorder() == null && chosen == true){
+			StringTokenizer position = new StringTokenizer(panel.getName(), ".");
 
 			gox = Integer.parseInt(position.nextToken());
 			goy = Integer.parseInt(position.nextToken());
-			
+
 			for (int i = 0; i < Board.possible[0].length; i++) {
 				if (possible[0][i] == gox && possible[1][i] == goy) {
-					
+
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;
-					
+
 					squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
-					
+
 					Game.table[gox][goy] = Game.table[chosenx][choseny];
 					Game.table[chosenx][choseny] = null;
-					
+
 					paintAll(getGraphics());
 					break;
 				}
 			}
-
 		}
 	}
 

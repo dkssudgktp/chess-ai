@@ -7,10 +7,6 @@ import chess.Board;
 import chess.Game;
 
 public abstract class Pair {
-  /*
-   * 말, 이동 경로 묶음
-   */
-
   private String name;
 
   private Byte flag;
@@ -30,6 +26,7 @@ public abstract class Pair {
 
   private int reverse = 1;
   private Byte nULL;
+
   public Pair() {
 	  nULL = (Byte) null;
     name = "";
@@ -49,10 +46,10 @@ public abstract class Pair {
     this.dy = dy;
 
     if (Board.BWchose == true) {
-		this.reverse = -1;
-	}else{
-		this.reverse = 1;
-	}
+		  this.reverse = -1;
+	  }else{
+		  this.reverse = 1;
+	  }
 
     this.dlen = (byte) dx.length;
   }
@@ -64,8 +61,9 @@ public abstract class Pair {
     this.ady = ady;
     this.adlen = (byte) adx.length;
   }
+
   public Pair(String name, byte flag, byte[] dx, byte[] dy, byte[] adx, byte[] ady, byte[] tmp) {
-	this(name, flag, dx, dy, adx, ady);
+	  this(name, flag, dx, dy, adx, ady);
     this.tmp = tmp;
   }
 
@@ -96,64 +94,68 @@ public abstract class Pair {
   }
 
   public Byte[][] movable(int chosenx, int choseny) {
-	List<Byte> resx = new ArrayList<Byte>();
-	List<Byte> resy = new ArrayList<Byte>();
+	  List<Byte> resx = new ArrayList<Byte>();
+	  List<Byte> resy = new ArrayList<Byte>();
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
-      byte tmpy = (byte) (dy[i] + choseny);
-      byte tmpx = (byte) (dx[i] * reverse + chosenx);
-      while (true) {//에러의 주요원인 다시 터짐
-    	  if (Game.isValueable(tmpx, tmpy)) {
-	        if (Game.isSet(tmpx, tmpy) == false) {
-	          resx.add(tmpx);
-	          resy.add(tmpy);
-	        }
-          else if (Game.isSet(tmpx, tmpy)) {
-	          if (Game.isEnemy(tmpx, tmpy)) {
+        byte tmpy = (byte) (dy[i] + choseny);
+        byte tmpx = (byte) (dx[i] * reverse + chosenx);
+
+        while (true) {//에러의 주요원인 다시 터짐
+    	    if (Game.isValueable(tmpx, tmpy)) {
+	          if (Game.isSet(tmpx, tmpy) == false) {
 	            resx.add(tmpx);
 	            resy.add(tmpy);
-	            System.out.println(tmpx);
-		          System.out.println(tmpy);
-	            break;
-	           }
-	          else{
-	             break;
 	          }
-	         }
-			  }else {
+            else if (Game.isSet(tmpx, tmpy)) {
+	            if (Game.isEnemy(tmpx, tmpy)) {
+	              resx.add(tmpx);
+	              resy.add(tmpy);
+	              System.out.println(tmpx);
+		            System.out.println(tmpy);
+	            break;
+	          }
+	          else {
+	            break;
+	          }
+	        }
+			  }
+        else {
 				      break;
 			  }
 
-          tmpx += dx[i]*-1;
+          tmpx += dx[i] * reverse;
           tmpy += dy[i];
         }
       }
     }
     else{
       for (int i = 0; i < dlen; ++i) {
-        if (choseny == 6 || choseny == 1) {
-          byte tmpx = (byte) (dx[i] * reverse + chosenx);
-              byte tmpy = (byte) (dy[i] + choseny);
-          if (Game.isValueable(tmpx, tmpy)) {
-          	if (!Game.isSet(tmpx, tmpy)) {
-    	          resx.add(tmpx);
-    	          resy.add(tmpy);
-    	        }else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
-    	        	resx.add(tmpx);
-      	        resy.add(tmpy);
-  			}
+        byte tmpx = (byte) (dx[i] * reverse + chosenx);
+        byte tmpy = (byte) (dy[i] + choseny);
+
+        if (Game.isValueable(tmpx, tmpy)) {
+          if (!Game.isSet(tmpx, tmpy)) {
+    	      resx.add(tmpx);
+    	      resy.add(tmpy);
+    	    }
+          else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
+    	      resx.add(tmpx);
+      	    resy.add(tmpy);
           }
         }
       }
     }
 
     if ((flag & (1 << 2)) == 4) {
-      byte tmpy = (byte) (tmp[0] + choseny);
-      byte tmpx = (byte) (tmp[1] * reverse + chosenx);
-      if (!Game.isSet(tmpx, tmpy)) {
-        resx.add(tmpx);
-        resy.add(tmpy);
+      if (chosenx == 6 || chosenx == 1) {
+        byte tmpy = (byte) (tmp[0] + choseny);
+        byte tmpx = (byte) (tmp[1] * reverse + chosenx);
+        if (!Game.isSet(tmpx, tmpy)) {
+          resx.add(tmpx);
+          resy.add(tmpy);
+        }
       }
     }
 
