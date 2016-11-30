@@ -12,8 +12,7 @@ public class Piece extends JLabel{
 		super(new ImageIcon("Black_King.png"), JLabel.CENTER);
 	}
 
-	public Piece(String image_file)
-    {
-        super(new ImageIcon(image_file), JLabel.CENTER);
-    }
+	public Piece(String image_file) {
+    super(new ImageIcon(image_file), JLabel.CENTER);
+  }
 }
