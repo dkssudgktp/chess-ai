@@ -7,6 +7,8 @@ import chess.Board;
 import chess.Game;
 
 public abstract class Pair {
+/////////////////////////////////////////////////
+// variables
   private String name;
 
   private Byte flag;
@@ -27,6 +29,8 @@ public abstract class Pair {
   private int reverse = 1;
   private Byte nULL;
 
+/////////////////////////////////////////////////
+// constructor
   public Pair() {
 	  nULL = (Byte) null;
     name = "";
@@ -67,9 +71,14 @@ public abstract class Pair {
     this.tmp = tmp;
   }
 
+/////////////////////////////////////////////////
+// abstract methods
   public abstract int posRate(int ratex, int ratey);
+
   public abstract int matRate();
 
+/////////////////////////////////////////////////
+// methods
   public static Pair getStuffClass(String stuff) {
 		for (int i = 0; i < Game.stuffpiece.length; ++i) {
 			if (stuff.endsWith(Game.stuffpiece[i])) {
