@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import chess.Board;
 import chess.Game;
 
-public class Pair {
+public abstract class Pair {
   /*
    * 말, 이동 경로 묶음
    */
@@ -69,14 +69,40 @@ public class Pair {
     this.tmp = tmp;
   }
 
-  public Byte[][] movable() {
+  public abstract int posRate(int ratex, int ratey);
+  public abstract int matRate();
+
+  public static Pair getStuffClass(String stuff) {
+		for (int i = 0; i < Game.stuffpiece.length; ++i) {
+			if (stuff.endsWith(Game.stuffpiece[i])) {
+				return Game.stuffs[i];
+			}
+		}
+
+		return null;
+	}
+
+  public static boolean isWhiteStuff(String stuff) {
+    if (stuff.startsWith("White")) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public static boolean isBlackStuff(String stuff) {
+    return !isWhiteStuff(stuff);
+  }
+
+  public Byte[][] movable(int chosenx, int choseny) {
 	List<Byte> resx = new ArrayList<Byte>();
 	List<Byte> resy = new ArrayList<Byte>();
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
-      byte tmpy = (byte) (dy[i] + Board.choseny);
-      byte tmpx = (byte) (dx[i]*reverse+ Board.chosenx);
+      byte tmpy = (byte) (dy[i] + choseny);
+      byte tmpx = (byte) (dx[i] * reverse + chosenx);
       while (true) {//에러의 주요원인 다시 터짐
     	  if (Game.isValueable(tmpx, tmpy)) {
 	        if (Game.isSet(tmpx, tmpy) == false) {
@@ -106,9 +132,9 @@ public class Pair {
     }
     else{
       for (int i = 0; i < dlen; ++i) {
-        if (Board.choseny == 6 || Board.choseny == 1) {
-          byte tmpx = (byte) (dx[i]*reverse + Board.chosenx);
-              byte tmpy = (byte) (dy[i] + Board.choseny);
+        if (choseny == 6 || choseny == 1) {
+          byte tmpx = (byte) (dx[i] * reverse + chosenx);
+              byte tmpy = (byte) (dy[i] + choseny);
           if (Game.isValueable(tmpx, tmpy)) {
           	if (!Game.isSet(tmpx, tmpy)) {
     	          resx.add(tmpx);
@@ -123,8 +149,8 @@ public class Pair {
     }
 
     if ((flag & (1 << 2)) == 4) {
-      byte tmpy = (byte) (tmp[0] + Board.choseny);
-      byte tmpx = (byte) (tmp[1]*reverse + Board.chosenx);
+      byte tmpy = (byte) (tmp[0] + choseny);
+      byte tmpx = (byte) (tmp[1] * reverse + chosenx);
       if (!Game.isSet(tmpx, tmpy)) {
         resx.add(tmpx);
         resy.add(tmpy);

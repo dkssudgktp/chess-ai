@@ -12,8 +12,8 @@ public class Game {
 	public static String[][] table = new String[8][8];
 
 	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
-	private static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
-	private static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
+	public static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
+	public static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
 
 	public Game() {
 		newGame();
@@ -40,7 +40,7 @@ public class Game {
 	public static Byte[][] stuffCheck(){// 체스가 갈수 있는 범위 체
 		for (int i = 0; i < stuffpiece.length; i++) {
 			if (table[Board.chosenx][Board.choseny].endsWith(stuffpiece[i])) {
-				Board.possible = stuffs[i].movable();
+				Board.possible = stuffs[i].movable(Board.chosenx, Board.choseny);
 				for (int j = 0; j < Board.possible[0].length; j++) {
 					System.out.println("---------------");
 					System.out.println(Board.possible[0][j]);
@@ -51,7 +51,7 @@ public class Game {
 		}
 		return null;
 	}
-	
+
 	public static boolean isValueable(int i , int j){
 		if (i < 8 && i >= 0 && j < 8 && j >= 0) {
 			return true;
