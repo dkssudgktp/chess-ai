@@ -10,14 +10,12 @@ import stuff.Rook;
 
 public class Game {
 	public static String[][] table = new String[8][8];
-
 	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
-	public static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
-	public static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
 
 	public Game() {
 		newGame();
 		Board t = new Board();
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (table[i][j] != null) {
@@ -25,7 +23,6 @@ public class Game {
 				}
 			}
 		}
-
 	}
 
 	private void newGame() { // 체크판을 새로 초기화 하는 함수
@@ -37,25 +34,29 @@ public class Game {
 		}
 	}
 
-	public static Byte[][] stuffCheck(){// 체스가 갈수 있는 범위 체
-		for (int i = 0; i < stuffpiece.length; i++) {
-			if (table[Board.chosenx][Board.choseny].endsWith(stuffpiece[i])) {
-				Board.possible = stuffs[i].movable(Board.chosenx, Board.choseny);
-				for (int j = 0; j < Board.possible[0].length; j++) {
-					System.out.println("---------------");
-					System.out.println(Board.possible[0][j]);
-					System.out.println(Board.possible[1][j]);
-					System.out.println("---------------");
-				}
+	public static Byte[][] stuffCheck(int chosenx, int choseny) {
+		Byte[][] possible = null;
+		Pair piece = Pair.getStuffClass(table[chosenx][choseny]);
+
+		if (piece != null) {
+			possible = piece.movable(chosenx, choseny);
+
+			for (int j = 0; j < possible[0].length; j++) {
+				System.out.println("---------------");
+				System.out.println(possible[0][j]);
+				System.out.println(possible[1][j]);
+				System.out.println("---------------");
 			}
 		}
-		return null;
+
+		return possible;
 	}
 
 	public static boolean isValuable(int i , int j){
 		if (i < 8 && i >= 0 && j < 8 && j >= 0) {
 			return true;
-		}else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -73,20 +74,14 @@ public class Game {
 	}
 
 	public static boolean isEnemy(int i, int j) {//true:white false:black
-		if (Board.BWchose == true) {
-			if (isSet(i,j) && table[i][j].startsWith("Black")) {
+		if (isSet(i, j)) {
+			if ((Board.isWhiteTurn && table[i][j].startsWith("Black"))
+				|| (!Board.isWhiteTurn && table[i][j].startsWith("White")))
+			{
 				return true;
-			}
-			else {
-				return false;
-			}
-		}else {
-			if (isSet(i,j) && table[i][j].startsWith("White")) {
-				return true;
-			}
-			else {
-				return false;
 			}
 		}
+
+		return false;
 	}
 }

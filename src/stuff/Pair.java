@@ -25,9 +25,10 @@ public abstract class Pair {
   private byte[] ady;
 
   private byte[] tmp;
-
-  private int reverse = -1;
   private Byte nULL;
+
+  private static String[] stuffpiece = {"Pawn","Rook", "Knight", "Bishop", "Queen", "King"};
+	private static Pair[] stuffs = {new Pawn(), new Rook(), new Knight(), new Bishop(), new Queen(), new King()};
 
 /////////////////////////////////////////////////
 // constructor
@@ -74,9 +75,9 @@ public abstract class Pair {
 /////////////////////////////////////////////////
 // methods
   public static Pair getStuffClass(String stuff) {
-		for (int i = 0; i < Game.stuffpiece.length; ++i) {
-			if (stuff.endsWith(Game.stuffpiece[i])) {
-				return Game.stuffs[i];
+		for (int i = 0; i < stuffpiece.length; ++i) {
+			if (stuff.endsWith(stuffpiece[i])) {
+				return stuffs[i];
 			}
 		}
 
@@ -99,6 +100,11 @@ public abstract class Pair {
   public Byte[][] movable(int chosenx, int choseny) {
 	  List<Byte> resx = new ArrayList<Byte>();
 	  List<Byte> resy = new ArrayList<Byte>();
+
+    int reverse = 1;
+    if (Board.isWhiteTurn) {
+      reverse = -1;
+    }
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {

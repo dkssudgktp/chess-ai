@@ -13,16 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Board extends JFrame implements MouseListener{
-	static boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
-	public static boolean BWchose = true;//누구의 차레인지 Ture:화이트, false:블랙
-	static Byte[][] possible;
-	public static int chosenx, choseny, gox, goy;
-	/**
+public class Board extends JFrame implements MouseListener {
+	private boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
+	private int chosenx, choseny;
+	public static boolean isWhiteTurn = true;//누구의 차레인지 Ture:화이트, false:블랙
+
+	/*
 	 * 체크판의 기본적인 배경 및 말 그리는 곳
 	 */
 	private static final long serialVersionUID = 1L;
-	JPanel [][] squares;
+	private JPanel [][] squares;
 
 	public void addPiece(Piece p,int i, int j){
     squares[i][j].add(p);
@@ -80,17 +80,17 @@ public class Board extends JFrame implements MouseListener{
 			if (Game.isSet(chosenx, choseny)) {
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
-
-				Game.stuffCheck();
 			}
 		}
 		else if(panel.getBorder() == null && chosen == true){
 			StringTokenizer position = new StringTokenizer(panel.getName(), ".");
 
-			gox = Integer.parseInt(position.nextToken());
-			goy = Integer.parseInt(position.nextToken());
+			int gox = Integer.parseInt(position.nextToken());
+			int goy = Integer.parseInt(position.nextToken());
 
-			for (int i = 0; i < Board.possible[0].length; i++) {
+			Byte[][] possible = Game.stuffCheck(chosenx, choseny);
+
+			for (int i = 0; i < possible[0].length; i++) {
 				if (possible[0][i] == gox && possible[1][i] == goy) {
 
 					squares[chosenx][choseny].setBorder(null);
@@ -100,6 +100,8 @@ public class Board extends JFrame implements MouseListener{
 
 					Game.table[gox][goy] = Game.table[chosenx][choseny];
 					Game.table[chosenx][choseny] = null;
+
+					isWhiteTurn = !isWhiteTurn;
 
 					paintAll(getGraphics());
 					break;
