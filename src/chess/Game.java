@@ -52,14 +52,14 @@ public class Game {
 		return null;
 	}
 
-	public static boolean isValueable(int i , int j){
+	public static boolean isValuable(int i , int j){
 		if (i < 8 && i >= 0 && j < 8 && j >= 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	
+
 	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
 		boolean result = false;
 

@@ -26,7 +26,7 @@ public abstract class Pair {
 
   private byte[] tmp;
 
-  private int reverse = 1;
+  private int reverse = -1;
   private Byte nULL;
 
 /////////////////////////////////////////////////
@@ -46,15 +46,9 @@ public abstract class Pair {
   public Pair(String name, byte flag, byte[] dx, byte[] dy) {
     this.name = name;
     this.flag = flag;
+
     this.dx = dx;
     this.dy = dy;
-
-    if (Board.BWchose == true) {
-		  this.reverse = -1;
-	  }else{
-		  this.reverse = 1;
-	  }
-
     this.dlen = (byte) dx.length;
   }
 
@@ -108,34 +102,42 @@ public abstract class Pair {
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
-        byte tmpy = (byte) (dy[i] + choseny);
-        byte tmpx = (byte) (dx[i] * reverse + chosenx);
+        byte tmpy = (byte)choseny;
+        byte tmpx = (byte)chosenx;
 
-        while (true) {//에러의 주요원인 다시 터짐
-    	    if (Game.isValueable(tmpx, tmpy)) {
-	          if (Game.isSet(tmpx, tmpy) == false) {
-	            resx.add(tmpx);
-	            resy.add(tmpy);
-	          }
-            else if (Game.isSet(tmpx, tmpy)) {
-	            if (Game.isEnemy(tmpx, tmpy)) {
-	              resx.add(tmpx);
-	              resy.add(tmpy);
-	              System.out.println(tmpx);
-		            System.out.println(tmpy);
-	            break;
-	          }
-	          else {
-	            break;
-	          }
-	        }
-			  }
-        else {
-				      break;
-			  }
+        while (true) {
+          if ((flag & (1 << 1)) == 2) {
+            for (int j = 0; j < adlen; ++j) {
+              byte adtmpy = (byte)(tmpy + ady[j]);
+              byte adtmpx = (byte)(tmpx + adx[j] * reverse);
 
-          tmpx += dx[i] * reverse;
+              if (Game.isValuable(adtmpx, adtmpy) && Game.isEnemy(adtmpx, adtmpy)) {
+                resx.add(adtmpx);
+                resy.add(adtmpy);
+              }
+            }
+          }
+
           tmpy += dy[i];
+          tmpx += dx[i] * reverse;
+
+    	    if (Game.isValuable(tmpx, tmpy)) {
+            if (Game.isSet(tmpx, tmpy)) {
+              if (Game.isEnemy(tmpx, tmpy) && (flag & (1 << 1)) == 0) {
+                resx.add(tmpx);
+                resy.add(tmpy);
+              }
+
+              break;
+            }
+            else {
+              resx.add(tmpx);
+              resy.add(tmpy);
+            }
+          }
+          else {
+            break;
+          }
         }
       }
     }
@@ -144,14 +146,26 @@ public abstract class Pair {
         byte tmpx = (byte) (dx[i] * reverse + chosenx);
         byte tmpy = (byte) (dy[i] + choseny);
 
-        if (Game.isValueable(tmpx, tmpy)) {
+        if (Game.isValuable(tmpx, tmpy)) {
           if (!Game.isSet(tmpx, tmpy)) {
     	      resx.add(tmpx);
     	      resy.add(tmpy);
     	    }
-          else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
+          else if (Game.isEnemy(tmpx, tmpy) && (flag & (1 << 1)) == 0) {
     	      resx.add(tmpx);
       	    resy.add(tmpy);
+          }
+        }
+      }
+
+      if ((flag & (1 << 1)) == 2) {
+        for (int i = 0; i < adlen; ++i) {
+          byte adtmpx = (byte)(adx[i] * reverse + chosenx);
+          byte adtmpy = (byte)(ady[i] + choseny);
+
+          if (Game.isValuable(adtmpx, adtmpy) && Game.isEnemy(adtmpx, adtmpy)) {
+            resx.add(adtmpx);
+            resy.add(adtmpy);
           }
         }
       }
