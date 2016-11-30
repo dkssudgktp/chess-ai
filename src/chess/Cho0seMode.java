@@ -23,7 +23,7 @@ public class Cho0seMode extends JFrame implements MouseListener{
     p2.add(new Piece("img/computer.jpg"));
     
     p1.add(new JLabel("Human Vs Human"));
-    p2.add(new JLabel("Human Vs computer"));
+    p2.add(new JLabel("Human Vs Computer"));
     
     p1.addMouseListener(this);
     p2.addMouseListener(this);
