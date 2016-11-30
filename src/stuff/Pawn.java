@@ -14,12 +14,5 @@ public class Pawn extends Pair {
 
   public Pawn() {
     super("Pawn", flag, dx, dy, adx, ady, tmp);
-
-  }
-
-  public void moved() {
-    if (Board.choseny == 6 || Board.choseny == 1) {
-      this.flag = (1 << 1);
-    }
   }
 }

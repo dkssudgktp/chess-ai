@@ -27,7 +27,7 @@ public class Pair {
   private byte[] ady;
 
   private byte[] tmp;
-  
+
   private int reverse = 1;
   private Byte nULL;
   public Pair() {
@@ -47,7 +47,7 @@ public class Pair {
     this.flag = flag;
     this.dx = dx;
     this.dy = dy;
-    
+
     if (Board.BWchose == true) {
 		this.reverse = -1;
 	}else{
@@ -106,16 +106,18 @@ public class Pair {
     }
     else{
       for (int i = 0; i < dlen; ++i) {
-    		byte tmpx = (byte) (dx[i]*reverse + Board.chosenx);
-            byte tmpy = (byte) (dy[i] + Board.choseny);
-        if (Game.isValueable(tmpx, tmpy)) {
-        	if (!Game.isSet(tmpx, tmpy)) {
-  	          resx.add(tmpx);
-  	          resy.add(tmpy);
-  	        }else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
-  	        	resx.add(tmpx);
-    	        resy.add(tmpy);
-			}
+        if (Board.choseny == 6 || Board.choseny == 1) {
+          byte tmpx = (byte) (dx[i]*reverse + Board.chosenx);
+              byte tmpy = (byte) (dy[i] + Board.choseny);
+          if (Game.isValueable(tmpx, tmpy)) {
+          	if (!Game.isSet(tmpx, tmpy)) {
+    	          resx.add(tmpx);
+    	          resy.add(tmpy);
+    	        }else if (Game.isSet(tmpx, tmpy) && Game.isEnemy(tmpx, tmpy)) {
+    	        	resx.add(tmpx);
+      	        resy.add(tmpy);
+  			}
+          }
         }
       }
     }
