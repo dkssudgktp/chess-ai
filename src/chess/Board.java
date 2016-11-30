@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 public class Board extends JFrame implements MouseListener {
 	private boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
@@ -44,7 +45,7 @@ public class Board extends JFrame implements MouseListener {
 				squares[i][j] = new JPanel();
 				squares[i][j].setName(String.valueOf(i)+'.'+String.valueOf(j));
 
-				if ((i+j)%2 == 0){
+				if ((i + j) % 2 == 0){
 					squares[i][j].setBackground(Color.decode("#FFC489"));
 				}
 				else {
@@ -78,6 +79,11 @@ public class Board extends JFrame implements MouseListener {
 			choseny = Integer.parseInt(position.nextToken());
 
 			if (Game.isSet(chosenx, choseny)) {
+				if (Game.isEnemy(chosenx, choseny)) {
+					JOptionPane.showMessageDialog(this, "not your turn");
+					return;
+				}
+
 				squares[chosenx][choseny].setBorder(BorderFactory.createLineBorder(Color.red,4));
 				chosen = true;
 			}
