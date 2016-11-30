@@ -1,15 +1,10 @@
 package chess;
 
-import stuff.Bishop;
-import stuff.King;
-import stuff.Knight;
 import stuff.Pair;
-import stuff.Pawn;
-import stuff.Queen;
-import stuff.Rook;
 
 public class Game {
 	public static String[][] table = new String[8][8];
+	public static Boolean isAiPlaying = false;
 	private String[] pieces = {"Rook", "Knight", "Bishop", "Queen", "King", "Bishop", "Knight", "Rook" };
 
 	public Game() {
