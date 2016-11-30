@@ -54,10 +54,10 @@ public class AiMain {
 
       if (this.depth == depth) {
         if (best == null) {
-          best = moves.clone();
+          best = moves.clone(result);
         }
         else if (result > best.getEvalScore()) {
-          best = moves.clone();
+          best = moves.clone(result);
         }
       }
 

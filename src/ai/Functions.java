@@ -47,6 +47,8 @@ public class Functions {
     int whiteResult = 0;
     int blackResult = 0;
 
+    boolean isBlackKing = false;
+
     for (int i = 0; i < tableSize; ++i) {
       for (int j = 0; j < tableSize; ++j) {
         if (table[i][j] != null) {
@@ -61,9 +63,16 @@ public class Functions {
             int ratey = tableSize - 1 - j;
 
             blackResult += piece.posRate(ratex, ratey) + piece.matRate();
+            if (stuff.endsWith("King")) {
+              isBlackKing = true;
+            }
           }
         }
       }
+    }
+
+    if (!isBlackKing) {
+      blackResult = Integer.MIN_VALUE;
     }
 
     if (isWhiteTurn) {

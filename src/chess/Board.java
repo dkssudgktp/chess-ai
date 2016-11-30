@@ -155,13 +155,15 @@ public class Board extends JFrame implements MouseListener {
 	}
 
 	private void aiPlay() {
-		Tuple<Pos, Pos> move = ai.getBestMove(4);
+		Tuple<Pos, Pos> move = ai.getBestMove(9);
 		Pos chosen = move.fst();
 		Pos go = move.snd();
 
 		if (Game.isEnemy(go.x, go.y) && Game.table[go.x][go.y].endsWith("King")) {
 			isGameEnd = true;
 		}
+
+		System.out.println(Game.table[chosen.x][chosen.y] + " > " + move);
 
 		moveStuff(chosen, go);
 		isWhiteTurn = !isWhiteTurn;

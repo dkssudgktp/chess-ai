@@ -22,10 +22,15 @@ public class Move {
   }
 
   public Move(String[][] table, boolean isWhiteTurn) {
-    this.table = table;
+    this.tableSize = table.length;
     this.isWhiteTurn = isWhiteTurn;
 
-    tableSize = table.length;
+    this.table = new String[tableSize][tableSize];
+    for (int i = 0; i < tableSize; ++i) {
+      for (int j = 0; j < tableSize; ++j) {
+        this.table[i][j] = table[i][j];
+      }
+    }
   }
 
   public void add(Pos target, Pos where) {
@@ -75,7 +80,7 @@ public class Move {
     return moves.get(0);
   }
 
-  public Move clone() {
+  public Move clone(int evalScore) {
     Move cloneMove = new Move(table, isWhiteTurn);
     cloneMove.moves.addAll(moves);
     cloneMove.moveLength = moves.size();
