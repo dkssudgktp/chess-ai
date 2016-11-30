@@ -10,15 +10,14 @@ public class AiMain {
   private int depth = 0;
   private Move best = null;
 
-  public Move getBestChoice(int depth) {
+  public Tuple<Pos, Pos> getBestMove(int depth) {
     this.depth = depth;
     best = null;
 
     Move init = new Move(Game.table, false);
-
     maxCase(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, init);
 
-    return best;
+    return best.getPos();
   }
 
   private int minCase(int depth, int alpha, int beta, Move moves) {
@@ -29,7 +28,7 @@ public class AiMain {
     ArrayList<Tuple<Pos, Pos>> movable = moves.getMovablePos();
     for (Tuple<Pos, Pos> move : movable) {
       moves.add(move);
-      int result = minCase(depth - 1, alpha, beta, moves);
+      int result = maxCase(depth - 1, alpha, beta, moves);
       moves.remove();
 
       if (result <= alpha) {
@@ -54,12 +53,10 @@ public class AiMain {
       int result = minCase(depth - 1, alpha, beta, moves);
 
       if (this.depth == depth) {
-        if (best != null) {
-          if (best.getEvalScore() < moves.eval()) {
-            best = moves.clone();
-          }
+        if (best == null) {
+          best = moves.clone();
         }
-        else {
+        else if (result > best.getEvalScore()) {
           best = moves.clone();
         }
       }

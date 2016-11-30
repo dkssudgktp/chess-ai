@@ -16,4 +16,8 @@ public class Tuple<A, B> {
   public B snd() {
     return var2;
   }
+
+  public String toString() {
+    return String.format(var1 + " : " + var2);
+  }
 }

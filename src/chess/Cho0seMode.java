@@ -11,67 +11,57 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Cho0seMode extends JFrame implements MouseListener{
-	JPanel p1 = new JPanel();
-	JPanel p2 = new JPanel();
+	JPanel humanPanel = new JPanel();
+	JPanel aiPanel = new JPanel();
+
+	private static final long serialVersionUID = 1L;
+
   public Cho0seMode(){
     Container pane = getContentPane();
-	pane.setLayout(new GridLayout(1, 2));
-	
+		pane.setLayout(new GridLayout(1, 2));
 
-	
-    p1.add(new Piece("img/human.jpg"));
-    p2.add(new Piece("img/computer.jpg"));
-    
-    p1.add(new JLabel("Human Vs Human"));
-    p2.add(new JLabel("Human Vs Computer"));
-    
-    p1.addMouseListener(this);
-    p2.addMouseListener(this);
-    
-    pane.add(p1);
-    pane.add(p2);
-    
+    humanPanel.add(new Piece("img/human.jpg"));
+    aiPanel.add(new Piece("img/computer.jpg"));
+
+    humanPanel.add(new JLabel("Human Vs Human"));
+    aiPanel.add(new JLabel("Human Vs Computer"));
+
+    humanPanel.addMouseListener(this);
+    aiPanel.addMouseListener(this);
+
+    pane.add(humanPanel);
+    pane.add(aiPanel);
+
     ImageIcon img = new ImageIcon("img/icon.png");
-    
-	this.setIconImage(img.getImage());
-	this.setSize(700,300);
-	this.setTitle("Chess");
-	this.setResizable(false);
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setVisible(true);
+
+		this.setIconImage(img.getImage());
+		this.setSize(700,300);
+		this.setTitle("Chess");
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
   }
 
-@Override
-public void mouseClicked(MouseEvent e) {
-	// TODO Auto-generated method stub
-	JPanel getJ = (JPanel) e.getComponent();
-	if (getJ.equals(p1)) 
-		Game.isAiPlaying = true;
-	this.dispose();
-	new Game();
-}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		JPanel pane = (JPanel) e.getComponent();
+		if (pane.equals(aiPanel)) {
+			Game.isAiPlaying = true;
+		}
 
-@Override
-public void mousePressed(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-}
+		this.dispose();
+		new Game();
+	}
 
-@Override
-public void mouseReleased(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void mousePressed(MouseEvent e) { }
 
-@Override
-public void mouseEntered(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void mouseReleased(MouseEvent e) { }
 
-@Override
-public void mouseExited(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void mouseEntered(MouseEvent e) { }
+
+	@Override
+	public void mouseExited(MouseEvent e) { }
 }

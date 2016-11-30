@@ -22,15 +22,14 @@ public class Functions {
           {
             Pair pair = Pair.getStuffClass(stuff);
 
-            Byte[] pos = new Byte[] { (byte)i, (byte)j };
+            Pos pos = new Pos(i, j);
             Byte[][] movable = pair.movable(i, j);
 
-            int size = movable.length;
+            int size = movable[0].length;
             for (int k = 0; k < size; ++k) {
-              Pos _pos = new Pos(pos);
-              Pos _movable = new Pos(movable[k]);
+              Pos _movable = new Pos(movable[0][k], movable[1][k]);
 
-              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(_pos, _movable);
+              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(pos, _movable);
               moves.add(info);
             }
           }
@@ -55,11 +54,11 @@ public class Functions {
           Pair piece = Pair.getStuffClass(stuff);
 
           if (Pair.isWhiteStuff(stuff)) {
-            whiteResult += piece.posRate(j, i) + piece.matRate();
+            whiteResult += piece.posRate(i, j) + piece.matRate();
           }
           else if (Pair.isBlackStuff(stuff)) {
-            int ratex = tableSize - 1 - j;
-            int ratey = tableSize - 1 - i;
+            int ratex = tableSize - 1 - i;
+            int ratey = tableSize - 1 - j;
 
             blackResult += piece.posRate(ratex, ratey) + piece.matRate();
           }
