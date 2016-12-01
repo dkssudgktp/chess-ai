@@ -6,7 +6,7 @@ import chess.Game;
 public class Promotion {
 	int prox = 0;
 	int proy = 0;
-	
+
 	public Promotion(int prox, int proy) {
 		if (prox == 0 && Board.isWhiteTurn && Game.table[prox][proy].equals("White_Pawn")) {
 			new PromotionFrame(prox, proy, true);
@@ -14,6 +14,4 @@ public class Promotion {
 			new PromotionFrame(prox, proy, false);
 		}
 	}
-	
-	
 }

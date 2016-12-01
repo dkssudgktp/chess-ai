@@ -23,13 +23,11 @@ public class Functions {
             Pair pair = Pair.getStuffClass(stuff);
 
             Pos pos = new Pos(i, j);
-            Byte[][] movable = pair.movable(i, j);
+            Pos[] movable = pair.movable(i, j);
 
-            int size = movable[0].length;
+            int size = movable.length;
             for (int k = 0; k < size; ++k) {
-              Pos _movable = new Pos(movable[0][k], movable[1][k]);
-
-              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(pos, _movable);
+              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(pos, movable[k]);
               moves.add(info);
             }
           }
@@ -47,8 +45,6 @@ public class Functions {
     int whiteResult = 0;
     int blackResult = 0;
 
-    boolean isBlackKing = false;
-
     for (int i = 0; i < tableSize; ++i) {
       for (int j = 0; j < tableSize; ++j) {
         if (table[i][j] != null) {
@@ -63,16 +59,9 @@ public class Functions {
             int ratey = tableSize - 1 - j;
 
             blackResult += piece.posRate(ratex, ratey) + piece.matRate();
-            if (stuff.endsWith("King")) {
-              isBlackKing = true;
-            }
           }
         }
       }
-    }
-
-    if (!isBlackKing) {
-      blackResult = Integer.MIN_VALUE;
     }
 
     if (isWhiteTurn) {

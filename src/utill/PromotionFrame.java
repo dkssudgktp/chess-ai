@@ -57,7 +57,6 @@ public class PromotionFrame extends JFrame implements MouseListener{
 			this.dispose();
 			new Game();
 		}
-
 	}
 
 	@Override

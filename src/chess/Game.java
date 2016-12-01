@@ -1,6 +1,7 @@
 package chess;
 
 import stuff.Pair;
+import structure.Pos;
 
 public class Game {
 	public static String[][] table = new String[8][8];
@@ -20,7 +21,7 @@ public class Game {
 		}
 	}
 
-	private void newGame() { // 체크판을 새로 초기화 하는 함수
+	private void newGame() {
 		for (int i = 0; i < pieces.length; i++) {
 			table[0][i] = "Black_"+pieces[i];
 			table[7][i] = "White_"+pieces[i];
@@ -29,8 +30,8 @@ public class Game {
 		}
 	}
 
-	public static Byte[][] stuffCheck(int chosenx, int choseny) {
-		Byte[][] possible = null;
+	public static Pos[] stuffCheck(int chosenx, int choseny) {
+		Pos[] possible = null;
 		Pair piece = Pair.getStuffClass(table[chosenx][choseny]);
 
 		if (piece != null) {
@@ -49,7 +50,7 @@ public class Game {
 		}
 	}
 
-	public static boolean isSet(int i, int j){ // 이함수는 판에 말이 있는지 없는지 확인할때 쓰는 함수
+	public static boolean isSet(int i, int j){
 		boolean result = false;
 
 		try {
@@ -61,7 +62,7 @@ public class Game {
 		return result;
 	}
 
-	public static boolean isEnemy(int i, int j) {//true:white false:black
+	public static boolean isEnemy(int i, int j) {
 		if (isSet(i, j)) {
 			if ((Board.isWhiteTurn && table[i][j].startsWith("Black"))
 				|| (!Board.isWhiteTurn && table[i][j].startsWith("White")))

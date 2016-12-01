@@ -2,7 +2,7 @@ package utill;
 
 import chess.Board;
 import chess.Game;
-
+import structure.Pos;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -12,14 +12,11 @@ public class KingCheck {
 	int Black_Kingy = 4;
 	int White_Kingx = 7;
 	int White_Kingy = 4;
-	
-	KingCheck(){
-	}
 
+	public KingCheck() { }
 
-	public Byte[][] Check() {
-		List<Byte> resx = new ArrayList<Byte>();
-		List<Byte> resy = new ArrayList<Byte>();
+	public Pos[] Check() {
+		List<Pos> res = new ArrayList<Pos>();
 
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
@@ -32,35 +29,28 @@ public class KingCheck {
 				}
 			}
 		}
-			for (int i = 0; i < 7; i++) {
-				for (int j = 0; j < 7; j++) {
-					if (Board.isWhiteTurn && Game.isSet(i, j) && Game.table[i][j].startsWith("Black")) {
-						Byte[][] possible = Game.stuffCheck(i,j);
-						for (int k = 0; k < possible[0].length; k++) {
-							if (possible[0][k] == i && possible[1][k] == j) {
-								resx.add((byte) i);
-								resy.add((byte) j);
-							}
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				if (Board.isWhiteTurn && Game.isSet(i, j) && Game.table[i][j].startsWith("Black")) {
+					Pos[] possible = Game.stuffCheck(i, j);
+					for (int k = 0; k < possible.length; ++k) {
+						if (possible[k].x == i && possible[k].y == j) {
+							res.add(possible[k]);
 						}
-					}else if (!Board.isWhiteTurn && Game.isSet(i, j) && Game.table[i][j].startsWith("White")) {
-						Byte[][] possible = Game.stuffCheck(i,j);
-						for (int k = 0; k < possible[0].length; k++) {
-							if (possible[0][k] == i && possible[1][k] == j) {
-								resx.add((byte) i);
-								resy.add((byte) j);
-							}
+					}
+				}
+				else if (!Board.isWhiteTurn && Game.isSet(i, j) && Game.table[i][j].startsWith("White")) {
+					Pos[] possible = Game.stuffCheck(i, j);
+					for (int k = 0; k < possible.length; ++k) {
+						if (possible[k].x == i && possible[k].y == j) {
+							res.add(possible[k]);
 						}
 					}
 				}
 			}
-			
-			Byte[] bResX = resx.toArray(new Byte[resx.size()]);
-		    Byte[] bResY = resy.toArray(new Byte[resy.size()]);
-		    Byte[][] result = new Byte[][] { bResX, bResY };
-		    
-		    return result;
 		}
-    
-    
 
+		Pos[] result = res.toArray(new Pos[res.size()]);
+	  return result;
+	}
 }
