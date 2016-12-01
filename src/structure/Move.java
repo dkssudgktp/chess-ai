@@ -20,11 +20,17 @@ public class Move {
       }
     }
   }
+
   public Move(String[][] table, boolean isWhiteTurn) {
-    this.table = table;
+    this.tableSize = table.length;
     this.isWhiteTurn = isWhiteTurn;
 
-    tableSize = table.length;
+    this.table = new String[tableSize][tableSize];
+    for (int i = 0; i < tableSize; ++i) {
+      for (int j = 0; j < tableSize; ++j) {
+        this.table[i][j] = table[i][j];
+      }
+    }
   }
 
   public void add(Pos target, Pos where) {
@@ -58,7 +64,7 @@ public class Move {
   }
 
   public int eval() {
-    evalScore = Functions.evaluate(table, isWhiteTurn);
+    evalScore = Functions.evaluate(table, !isWhiteTurn);
     return evalScore;
   }
 
@@ -70,14 +76,15 @@ public class Move {
     return Functions.getAllMoves(table, isWhiteTurn);
   }
 
-  private void setMoves(ArrayList<Tuple<Pos, Pos>> moves) {
-    this.moves.addAll(moves);
-    moveLength = moves.size();
+  public Tuple<Pos, Pos> getPos() {
+    return moves.get(0);
   }
 
-  public Move clone() {
+  public Move clone(int evalScore) {
     Move cloneMove = new Move(table, isWhiteTurn);
-    cloneMove.setMoves(moves);
+    cloneMove.moves.addAll(moves);
+    cloneMove.moveLength = moves.size();
+    cloneMove.evalScore = evalScore;
 
     return cloneMove;
   }

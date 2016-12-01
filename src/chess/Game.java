@@ -35,13 +35,6 @@ public class Game {
 
 		if (piece != null) {
 			possible = piece.movable(chosenx, choseny);
-
-			for (int j = 0; j < possible[0].length; j++) {
-				System.out.println("---------------");
-				System.out.println(possible[0][j]);
-				System.out.println(possible[1][j]);
-				System.out.println("---------------");
-			}
 		}
 
 		return possible;

@@ -1,6 +1,10 @@
 package chess;
 
+import ai.AiMain;
+import ai.Functions;
 import stuff.Pair;
+import structure.Pos;
+import structure.Tuple;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -18,9 +22,10 @@ import javax.swing.JOptionPane;
 
 
 public class Board extends JFrame implements MouseListener {
-	private boolean isGameEnd = false;
 	private boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
 	private int chosenx, choseny;
+	private AiMain ai = new AiMain();
+	private boolean isGameEnd = false;
 	public static boolean isWhiteTurn = true;//누구의 차레인지 Ture:화이트, false:블랙
 
 	/*
@@ -28,16 +33,6 @@ public class Board extends JFrame implements MouseListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel [][] squares;
-
-	public void addPiece(Piece p,int i, int j){
-    squares[i][j].add(p);
-    paintAll(getGraphics());
-  }
-
-	public void removePiece(int x, int y){
-    squares[x][y].remove(0);
-    paintAll(getGraphics());
-  }
 
 	public Board(){
 		Container pane = getContentPane();
@@ -68,6 +63,39 @@ public class Board extends JFrame implements MouseListener {
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+	}
+
+	public void addPiece(Piece p,int i, int j){
+    squares[i][j].add(p);
+    paintAll(getGraphics());
+  }
+
+	public void removePiece(int x, int y){
+    squares[x][y].remove(0);
+    paintAll(getGraphics());
+  }
+
+	private void moveStuff(Pos chosen, Pos go) {
+		if (Game.isEnemy(go.x, go.y)) {
+			squares[go.x][go.y].removeAll();
+		}
+
+		squares[go.x][go.y].add(squares[chosen.x][chosen.y].getComponent(0));
+
+		Game.table[go.x][go.y] = Game.table[chosen.x][chosen.y];
+		Game.table[chosen.x][chosen.y] = null;
+
+		paintAll(getGraphics());
+	}
+
+	private void end() {
+		String winner = "White";
+		if (isWhiteTurn) {
+			winner = "Black";
+		}
+
+		JOptionPane.showMessageDialog(this, winner + " win !!");
+		System.exit(0);
 	}
 
 	private void pickup(Object obj) {
@@ -106,36 +134,42 @@ public class Board extends JFrame implements MouseListener {
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;
 
-					if (Game.isEnemy(gox, goy)) {
-						squares[gox][goy].removeAll();
-
-						if (Game.table[gox][goy].endsWith("King")) {
-							isGameEnd = true;
-						}
+					if (Game.isEnemy(gox, goy) && Game.table[gox][goy].endsWith("King")) {
+						isGameEnd = true;
 					}
 
-					squares[gox][goy].add(squares[chosenx][choseny].getComponent(0));
-
-					Game.table[gox][goy] = Game.table[chosenx][choseny];
-					Game.table[chosenx][choseny] = null;
-
+					moveStuff(new Pos(chosenx, choseny), new Pos(gox, goy));
 					isWhiteTurn = !isWhiteTurn;
 
-					paintAll(getGraphics());
-
 					if (isGameEnd) {
-						String winner = "White";
-						if (isWhiteTurn) {
-							winner = "Black";
-						}
-
-						JOptionPane.showMessageDialog(this, winner + " win !!");
-						System.exit(0);
+						end();
+					}
+					if (Game.isAiPlaying) {
+						aiPlay();
 					}
 
 					break;
 				}
 			}
+		}
+	}
+
+	private void aiPlay() {
+		Tuple<Pos, Pos> move = ai.getBestMove(9);
+		Pos chosen = move.fst();
+		Pos go = move.snd();
+
+		if (Game.isEnemy(go.x, go.y) && Game.table[go.x][go.y].endsWith("King")) {
+			isGameEnd = true;
+		}
+
+		System.out.println(Game.table[chosen.x][chosen.y] + " > " + move);
+
+		moveStuff(chosen, go);
+		isWhiteTurn = !isWhiteTurn;
+
+		if (isGameEnd) {
+			end();
 		}
 	}
 

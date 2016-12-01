@@ -182,9 +182,12 @@ public abstract class Pair {
       if (chosenx == 6 || chosenx == 1) {
         byte tmpy = (byte) (tmp[0] + choseny);
         byte tmpx = (byte) (tmp[1] * reverse + chosenx);
-        if (!Game.isSet(tmpx, tmpy)) {
-          resx.add(tmpx);
-          resy.add(tmpy);
+
+        if (Game.isValuable(tmpx, tmpy)) {
+          if (!Game.isSet(tmpx, tmpy)) {
+            resx.add(tmpx);
+            resy.add(tmpy);
+          }
         }
       }
     }

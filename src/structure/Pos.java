@@ -8,6 +8,11 @@ public class Pos {
     this.y = y;
   }
 
+  public Pos(int x, int y) {
+    this.x = (byte)x;
+    this.y = (byte)y;
+  }
+
   public Pos(Byte[] pos) {
     if (pos.length < 2) {
       this.x = -1;
@@ -17,5 +22,9 @@ public class Pos {
       this.x = pos[0];
       this.y = pos[1];
     }
+  }
+
+  public String toString() {
+    return String.format("(%d, %d)", x, y);
   }
 }
