@@ -1,0 +1,3 @@
+cd bin
+jar cfm Chess.jar manifest.txt ai chess stuff structure img
+mv Chess.jar ../

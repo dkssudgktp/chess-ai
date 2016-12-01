@@ -11,11 +11,12 @@ public class Game {
 	public Game() {
 		newGame();
 		Board t = new Board();
+		Piece piece = new Piece();
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (table[i][j] != null) {
-					t.addPiece(new Piece("img/"+table[i][j]+".png"), i, j);
+					t.addPiece(piece.make("img/"+table[i][j]+".png"), i, j);
 				}
 			}
 		}

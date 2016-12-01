@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
@@ -62,7 +63,12 @@ public class Board extends JFrame implements MouseListener {
     this.setVisible(true);
 	}
 
-	public void addPiece(Piece p,int i, int j){
+	public void addPiece(Piece p, int i, int j){
+    squares[i][j].add(p);
+    paintAll(getGraphics());
+  }
+
+	public void addPiece(JLabel p, int i, int j){
     squares[i][j].add(p);
     paintAll(getGraphics());
   }

@@ -20,8 +20,10 @@ public class Cho0seMode extends JFrame implements MouseListener{
     Container pane = getContentPane();
 		pane.setLayout(new GridLayout(1, 2));
 
-    humanPanel.add(new Piece("img/human.jpg"));
-    aiPanel.add(new Piece("img/computer.jpg"));
+		Piece piece = new Piece();
+
+    humanPanel.add(piece.make("img/human.jpg"));
+    aiPanel.add(piece.make("img/computer.jpg"));
 
     humanPanel.add(new JLabel("Human Vs Human"));
     aiPanel.add(new JLabel("Human Vs Computer"));
