@@ -23,13 +23,11 @@ public class Functions {
             Pair pair = Pair.getStuffClass(stuff);
 
             Pos pos = new Pos(i, j);
-            Byte[][] movable = pair.movable(i, j);
+            Pos[] movable = pair.movable(i, j);
 
-            int size = movable[0].length;
+            int size = movable.length;
             for (int k = 0; k < size; ++k) {
-              Pos _movable = new Pos(movable[0][k], movable[1][k]);
-
-              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(pos, _movable);
+              Tuple<Pos, Pos> info = new Tuple<Pos, Pos>(pos, movable[k]);
               moves.add(info);
             }
           }

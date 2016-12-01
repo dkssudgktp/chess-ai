@@ -20,17 +20,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
-
 public class Board extends JFrame implements MouseListener {
-	private boolean chosen;//선택 되었는지 확인 true 선택됨 false 선택 안됨
+	private boolean chosen;
 	private int chosenx, choseny;
+
 	private AiMain ai = new AiMain();
 	private boolean isGameEnd = false;
-	public static boolean isWhiteTurn = true;//누구의 차레인지 Ture:화이트, false:블랙
+	public static boolean isWhiteTurn = true;
 
-	/*
-	 * 체크판의 기본적인 배경 및 말 그리는 곳
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel [][] squares;
 
@@ -126,10 +123,9 @@ public class Board extends JFrame implements MouseListener {
 			int gox = Integer.parseInt(position.nextToken());
 			int goy = Integer.parseInt(position.nextToken());
 
-			Byte[][] possible = Game.stuffCheck(chosenx, choseny);
-
-			for (int i = 0; i < possible[0].length; i++) {
-				if (possible[0][i] == gox && possible[1][i] == goy) {
+			Pos[] possible = Game.stuffCheck(chosenx, choseny);
+			for (int i = 0; i < possible.length; ++i) {
+				if (possible[i].x == gox && possible[i].y == goy) {
 
 					squares[chosenx][choseny].setBorder(null);
 					chosen = false;

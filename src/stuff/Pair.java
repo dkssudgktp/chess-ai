@@ -1,10 +1,9 @@
 package stuff;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import chess.Board;
 import chess.Game;
+import structure.Pos;
+import java.util.ArrayList;
 
 public abstract class Pair {
 /////////////////////////////////////////////////
@@ -97,15 +96,13 @@ public abstract class Pair {
     return !isWhiteStuff(stuff);
   }
 
-  public Byte[][] movable(int chosenx, int choseny) {
-	  List<Byte> resx = new ArrayList<Byte>();
-	  List<Byte> resy = new ArrayList<Byte>();
+  public Pos[] movable(int chosenx, int choseny) {
+	  ArrayList<Pos> res = new ArrayList<Pos>();
 
     int reverse = 1;
     if (Board.isWhiteTurn) {
       reverse = -1;
     }
-
 
     if ((flag & 1) == 1) {
       for (int i = 0; i < dlen; ++i) {
@@ -119,8 +116,7 @@ public abstract class Pair {
               byte adtmpx = (byte)(tmpx + adx[j] * reverse);
 
               if (Game.isValuable(adtmpx, adtmpy) && Game.isEnemy(adtmpx, adtmpy)) {
-                resx.add(adtmpx);
-                resy.add(adtmpy);
+                res.add(new Pos(adtmpx, adtmpy));
               }
             }
           }
@@ -131,15 +127,13 @@ public abstract class Pair {
     	    if (Game.isValuable(tmpx, tmpy)) {
             if (Game.isSet(tmpx, tmpy)) {
               if (Game.isEnemy(tmpx, tmpy) && (flag & (1 << 1)) == 0) {
-                resx.add(tmpx);
-                resy.add(tmpy);
+                res.add(new Pos(tmpx, tmpy));
               }
 
               break;
             }
             else {
-              resx.add(tmpx);
-              resy.add(tmpy);
+              res.add(new Pos(tmpx, tmpy));
             }
           }
           else {
@@ -155,12 +149,10 @@ public abstract class Pair {
 
         if (Game.isValuable(tmpx, tmpy)) {
           if (!Game.isSet(tmpx, tmpy)) {
-    	      resx.add(tmpx);
-    	      resy.add(tmpy);
+            res.add(new Pos(tmpx, tmpy));
     	    }
           else if (Game.isEnemy(tmpx, tmpy) && (flag & (1 << 1)) == 0) {
-    	      resx.add(tmpx);
-      	    resy.add(tmpy);
+            res.add(new Pos(tmpx, tmpy));
           }
         }
       }
@@ -171,8 +163,7 @@ public abstract class Pair {
           byte adtmpy = (byte)(ady[i] + choseny);
 
           if (Game.isValuable(adtmpx, adtmpy) && Game.isEnemy(adtmpx, adtmpy)) {
-            resx.add(adtmpx);
-            resy.add(adtmpy);
+            res.add(new Pos(adtmpx, adtmpy));
           }
         }
       }
@@ -185,17 +176,13 @@ public abstract class Pair {
 
         if (Game.isValuable(tmpx, tmpy)) {
           if (!Game.isSet(tmpx, tmpy)) {
-            resx.add(tmpx);
-            resy.add(tmpy);
+            res.add(new Pos(tmpx, tmpy));
           }
         }
       }
     }
-
-    Byte[] bResX = resx.toArray(new Byte[resx.size()]);
-    Byte[] bResY = resy.toArray(new Byte[resy.size()]);
-    Byte[][] result = new Byte[][] { bResX, bResY };
-
+    
+    Pos[] result = res.toArray(new Pos[res.size()]);
     return result;
   }
 }
