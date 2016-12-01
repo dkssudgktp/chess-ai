@@ -8,19 +8,18 @@ import java.util.ArrayList;
 
 public class AiMain {
   private int depth = 0;
-  private Move best = null;
 
   public Tuple<Pos, Pos> getBestMove(int depth) {
     this.depth = depth;
-    best = null;
 
+    Move best = new Move(Game.table, false);
     Move init = new Move(Game.table, false);
-    maxCase(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, init);
+    maxCase(depth, Integer.MIN_VALUE, Integer.MAX_VALUE, init, best);
 
     return best.getPos();
   }
 
-  private int minCase(int depth, int alpha, int beta, Move moves) {
+  private int minCase(int depth, int alpha, int beta, Move moves, Move best) {
     if (depth == 0) {
       return moves.eval();
     }
@@ -28,7 +27,7 @@ public class AiMain {
     ArrayList<Tuple<Pos, Pos>> movable = moves.getMovablePos();
     for (Tuple<Pos, Pos> move : movable) {
       moves.add(move);
-      int result = maxCase(depth - 1, alpha, beta, moves);
+      int result = maxCase(depth - 1, alpha, beta, moves, best);
       moves.remove();
 
       if (result <= alpha) {
@@ -42,7 +41,7 @@ public class AiMain {
     return beta;
   }
 
-  private int maxCase(int depth, int alpha, int beta, Move moves) {
+  private int maxCase(int depth, int alpha, int beta, Move moves, Move best) {
     if (depth == 0) {
       return moves.eval();
     }
@@ -50,18 +49,17 @@ public class AiMain {
     ArrayList<Tuple<Pos, Pos>> movable = moves.getMovablePos();
     for (Tuple<Pos, Pos> move : movable) {
       moves.add(move);
-      int result = minCase(depth - 1, alpha, beta, moves);
+      int result = minCase(depth - 1, alpha, beta, moves, best);
+      moves.remove();
 
       if (this.depth == depth) {
-        if (best == null) {
-          best = moves.clone(result);
-        }
-        else if (result > best.getEvalScore()) {
-          best = moves.clone(result);
+        if (result > best.getEval()) {
+          best.remove();
+
+          best.add(move);
+          best.setEval(result);
         }
       }
-
-      moves.remove();
 
       if (result >= beta) {
         return beta;

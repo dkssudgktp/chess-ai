@@ -155,7 +155,7 @@ public class Board extends JFrame implements MouseListener {
 	}
 
 	private void aiPlay() {
-		Tuple<Pos, Pos> move = ai.getBestMove(9);
+		Tuple<Pos, Pos> move = ai.getBestMove(4);
 		Pos chosen = move.fst();
 		Pos go = move.snd();
 
@@ -189,5 +189,4 @@ public class Board extends JFrame implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-
 }

@@ -4,14 +4,18 @@ import ai.Functions;
 import java.util.ArrayList;
 
 public class Move {
+/////////////////////////////////////////////////
+// variables
   private int tableSize = 8; //default chess board size
   private String[][] table = null;
   private boolean isWhiteTurn = true;
 
-  private int evalScore = Integer.MIN_VALUE;
   private int moveLength = 0;
+  private int evalScore = Integer.MIN_VALUE;
   private ArrayList<Tuple<Pos, Pos>> moves = new ArrayList<Tuple<Pos, Pos>>();
 
+////////////////////////////////////////////////
+// constructor
   public Move() {
     table = new String[tableSize][tableSize];
     for (int i = 0; i < tableSize; ++i) {
@@ -33,12 +37,14 @@ public class Move {
     }
   }
 
+/////////////////////////////////////////////////
+// edit moves
   public void add(Pos target, Pos where) {
     moves.add(new Tuple<Pos, Pos>(target, where));
 
-    String stuff = table[target.y][target.x];
-    table[target.y][target.x] = null;
-    table[where.y][where.x] = stuff;
+    String stuff = table[target.x][target.y];
+    table[target.x][target.y] = null;
+    table[where.x][where.y] = stuff;
 
     ++moveLength;
     isWhiteTurn = !isWhiteTurn;
@@ -49,43 +55,45 @@ public class Move {
   }
 
   public void remove() {
+    if (moveLength == 0) {
+      return;
+    }
+
     Tuple<Pos, Pos> last = moves.get(moveLength - 1);
     moves.remove(moveLength - 1);
 
     Pos target = last.snd();
     Pos where = last.fst();
 
-    String stuff = table[target.y][target.x];
-    table[target.y][target.x] = null;
-    table[where.y][where.x] = stuff;
+    String stuff = table[target.x][target.y];
+    table[target.x][target.y] = null;
+    table[where.x][where.y] = stuff;
 
     --moveLength;
     isWhiteTurn = !isWhiteTurn;
   }
 
+/////////////////////////////////////////////////
+// evaluate
   public int eval() {
-    evalScore = Functions.evaluate(table, !isWhiteTurn);
+    return Functions.evaluate(table, !isWhiteTurn);
+  }
+
+  public void setEval(int evalScore) {
+    this.evalScore = evalScore;
+  }
+
+  public int getEval() {
     return evalScore;
   }
 
-  public int getEvalScore() {
-    return evalScore;
-  }
-
+/////////////////////////////////////////////////
+// position
   public ArrayList<Tuple<Pos, Pos>> getMovablePos() {
     return Functions.getAllMoves(table, isWhiteTurn);
   }
 
   public Tuple<Pos, Pos> getPos() {
     return moves.get(0);
-  }
-
-  public Move clone(int evalScore) {
-    Move cloneMove = new Move(table, isWhiteTurn);
-    cloneMove.moves.addAll(moves);
-    cloneMove.moveLength = moves.size();
-    cloneMove.evalScore = evalScore;
-
-    return cloneMove;
   }
 }
