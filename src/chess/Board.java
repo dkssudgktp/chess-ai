@@ -37,16 +37,19 @@ public class Board extends JFrame implements MouseListener {
 		pane.setLayout(new GridLayout(8, 8));
 
 		squares = new JPanel[8][8];
+
+		Color bgcolor1 = Color.decode("#FFC489");
+		Color bgcolor2 = Color.decode("#C77931");
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				squares[i][j] = new JPanel();
 				squares[i][j].setName(String.valueOf(i)+'.'+String.valueOf(j));
 
 				if ((i + j) % 2 == 0){
-					squares[i][j].setBackground(Color.decode("#FFC489"));
+					squares[i][j].setBackground(bgcolor1);
 				}
 				else {
-					squares[i][j].setBackground(Color.decode("#C77931"));
+					squares[i][j].setBackground(bgcolor2);
 				}
 
 				squares[i][j].addMouseListener(this);
